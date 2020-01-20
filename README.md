@@ -45,18 +45,18 @@ $ sudo pip3 install pybind11\
 $ sudo pip3 install scipy\
 $ sudo pip3 install keras\
 $ wget https://developer.download.nvidia.com/compute/redist/jp/v42/tensorflow-gpu/tensorflow_gpu-1.15.0+nv19.11-cp36-cp36m-linux_aarch64.whl
+\
 $ sudo pip3 install tensorflow_gpu-1.15.0+nv19.11-cp36-cp36m-linux_aarch64.whl\
 $ sudo pip3 install pandas\
 $ sudo pip3 install --upgrade Cython\
 $ sudo pip3 install scikit-learn\
-$ sudo pip3 install tensorflow-hub\\
+$ sudo pip3 install tensorflow-hub\
 
 2. If you have done a ssh to Jetson Nano and no terminal is attached to it, then please execute the below command:\
-$ export DISPLAY=:0\\
+$ export DISPLAY=:0\
 
 3. Execute the below command to start the chatbot:\
-$ python3 odo.py\
+$ python3 odo.py
 
 What to expect:\
-If you are using a laptop, then your webcam will start and it will try to detect a face. Only after face is detected will the chatbot start.
-If you are using Jetson, then this will activate the USB camera connected to jetson and wait till it detects the face.
+If you are using a laptop, then your webcam will start and it will try to detect a face. Only after face is detected will the chatbot start. If you are using Jetson, then this will activate the USB camera connected to jetson and wait till it detects the face.
