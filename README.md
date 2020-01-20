@@ -10,7 +10,7 @@ This chatbot is suitable for Linux environment. It is compatible to Nvidia Jetso
 Setup for Linux Environment(Ubuntu 18.0.4):
 
 1. Install anaconda following this link: \
-https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart\
+https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart
 
 2. In the terminal, type the following commands:\
 $ conda create --name chatbot python=3\
@@ -21,13 +21,13 @@ $ conda install -c anaconda scikit-learn\
 $ conda install -c conda-forge tensorflow-hub\
 $ conda install -c conda-forge opencv=4.1.0\\
 
-3. Before starting the chatbot, you will have to build models for dialogue_system and poem_generator. Follow the ReadMe.md file of models/dialogue_system and models/poem_generator to train and generate the models.\\
+3. Before starting the chatbot, you will have to build models for dialogue_system and poem_generator. Follow the ReadMe.md file of models/dialogue_system and models/poem_generator to train and generate the models.\
 
 3. Execute the below command to start the chatbot:\
 $ conda activate chatbot\
-$ python3 odo.py\\
+$ python3 odo.py\
 
-Setup for Nividia Jetson Nano:\\
+Setup for Nividia Jetson Nano:\
 
 1. In the terminal, execute the following commands:\
 $ sudo fallocate -l 8G /swapfile\
@@ -44,7 +44,7 @@ $ sudo apt-get install python3-numpy\
 $ sudo pip3 install pybind11\
 $ sudo pip3 install scipy\
 $ sudo pip3 install keras\
-$ wget https://developer.download.nvidia.com/compute/redist/jp/v42/tensorflow-gpu/tensorflow_gpu-1.15.0+nv19.11-cp36-cp36m-linux_aarch64.whl\
+$ wget https://developer.download.nvidia.com/compute/redist/jp/v42/tensorflow-gpu/tensorflow_gpu-1.15.0+nv19.11-cp36-cp36m-linux_aarch64.whl
 $ sudo pip3 install tensorflow_gpu-1.15.0+nv19.11-cp36-cp36m-linux_aarch64.whl\
 $ sudo pip3 install pandas\
 $ sudo pip3 install --upgrade Cython\
