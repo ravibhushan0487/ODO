@@ -359,7 +359,7 @@ class UnivEncoder:
     def __init__(self, tf_session, intents):
         self.intents = intents
         self.session = tf_session
-        self.embed = hub.Module("models/trained_models/chatbot/3")
+        self.embed = hub.Module("models/dialogue_system/3")
         self.similarity_input_placeholder = tf.placeholder(tf.string, shape=(None))
         self.similarity_sentences_encodings = self.embed(self.similarity_input_placeholder)
         self.session.run(tf.global_variables_initializer())
