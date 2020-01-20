@@ -1,0 +1,17 @@
+tempslibres.csv - http://www.tempslibres.org
+    Downloaded from tempslibres, used langdetect to get only english language haikus
+
+sballas8.csv - https://github.com/sballas8/PoetRNN
+    Used Sam Ballas's collection of haikus
+
+unim_poem.json - https://github.com/bei21/img2poem
+    From the paper  "Beyond Narrative Description: Generating Poetry from Images by Multi-Adversarial Training."
+    Bei Liu, Jianlong Fu, Makoto P. Kato, Masatoshi Yoshikawa
+    https://arxiv.org/abs/1804.08473
+
+modern_renaissance.csv - https://www.kaggle.com/ultrajack/modern-renaissance-poetry
+	Not used currently
+
+haikuzao.txt - https://github.com/herval/creative_machines/blob/master/haikuzao/src/main/resources/haiku.txt
+
+twaikugc.csv - scraped from https://twitter.com/TwaikuGC
