@@ -1,13 +1,13 @@
 ODO - The AI chatbot
 
 This is a completely offline chatbot suitable for theatres.\
-The chatbot has been modelled to represent the character of Little Prince from the book "The Little Prince". You can change the character of the chatbot by modifying file models/dialogue_system/dialogue_system.py. For more information on the project, please refer to Project_Report.pdf\
+The chatbot has been modelled to represent the character of Little Prince from the book "The Little Prince". You can change the character of the chatbot by modifying file models/dialogue_system/dialogue_system.py. For more information on the project, please refer to Project_Report.pdf
 
-This chatbot is suitable for Linux environment. It is compatible to Nvidia Jetson Nano. For setup information please read on.\
+This chatbot is suitable for Linux environment. It is compatible to Nvidia Jetson Nano. For setup information please read on.
  
 
  
-Setup for Linux Environment(Ubuntu 18.0.4):\
+Setup for Linux Environment(Ubuntu 18.0.4):
 
 1. Install anaconda following this link: \
 https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart\
@@ -55,8 +55,8 @@ $ sudo pip3 install tensorflow-hub\\
 $ export DISPLAY=:0\\
 
 3. Execute the below command to start the chatbot:\
-$ python3 odo.py\\
+$ python3 odo.py\
 
 What to expect:\
-If you are using a laptop, then your webcam will start and it will try to detect a face. Only after face is detected will the chatbot start.\
+If you are using a laptop, then your webcam will start and it will try to detect a face. Only after face is detected will the chatbot start.
 If you are using Jetson, then this will activate the USB camera connected to jetson and wait till it detects the face.
