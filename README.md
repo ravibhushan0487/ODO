@@ -9,7 +9,8 @@ This chatbot is suitable for Linux environment. It is compatible to Nvidia Jetso
  
 Setup for Linux Environment(Ubuntu 18.0.4):
 
-1. Install anaconda following this link: https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart
+1. Install anaconda following this link: 
+https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart
 
 2. In the terminal, type the following commands:
 $ conda create --name chatbot python=3
