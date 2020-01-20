@@ -406,13 +406,13 @@ def main():
     univEncoder = UnivEncoder(tf_session, chatbot.intents)
 
 
-    output_dir = Path('models/trained_models/poem_generator')
+    output_dir = Path('models/poem_generator')
     # Get the parameters used for creating the model
     latent_dim, n_tokens, max_line_length, tokenizer = joblib.load(output_dir / 'metadata.pkl')
     # Create the new placeholder model
     training_model, lstm, lines, inputs, outputs = create_training_model(latent_dim, n_tokens)
     # Load the specified weights
-    training_model.load_weights(output_dir / '2048-20-0.73-1.43.hdf5')
+    training_model.load_weights(output_dir / 'poem_generator_weights.hdf5')
     haiku_bot = Generator(lstm, lines, tf_session, tokenizer, n_tokens, max_line_length)
 
     face_recognizer = Face_Recognizer(False)
