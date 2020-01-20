@@ -52,7 +52,7 @@ $ sudo pip3 install --upgrade Cython\
 $ sudo pip3 install scikit-learn\
 $ sudo pip3 install tensorflow-hub
 
-2. If you have done a ssh to Jetson Nano and no terminal is attached to it, then please execute the below command:\
+2. If you have done a ssh to Jetson Nano and no display is attached to it, then please execute the below command:\
 $ export DISPLAY=:0
 
 3. Execute the below command to start the chatbot:\
