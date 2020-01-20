@@ -1,16 +1,16 @@
 ODO - The AI chatbot
 
 This is a completely offline chatbot suitable for theatres.\
-The chatbot has been modelled to represent the character of Little Prince from the book "The Little Prince". You can change the character of the chatbot by modifying file models/dialogue_system/dialogue_system.py. For more information on the project, please refer to Project_Report.pdf\\
+The chatbot has been modelled to represent the character of Little Prince from the book "The Little Prince". You can change the character of the chatbot by modifying file models/dialogue_system/dialogue_system.py. For more information on the project, please refer to Project_Report.pdf\
 
-This chatbot is suitable for Linux environment. It is compatible to Nvidia Jetson Nano. For setup information please read on.\\\
+This chatbot is suitable for Linux environment. It is compatible to Nvidia Jetson Nano. For setup information please read on.\
  
 
  
-Setup for Linux Environment(Ubuntu 18.0.4):\\
+Setup for Linux Environment(Ubuntu 18.0.4):\
 
 1. Install anaconda following this link: \
-https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart\\
+https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart\
 
 2. In the terminal, type the following commands:\
 $ conda create --name chatbot python=3\
