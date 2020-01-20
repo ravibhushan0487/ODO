@@ -21,13 +21,13 @@ $ conda install -c anaconda scikit-learn\
 $ conda install -c conda-forge tensorflow-hub\
 $ conda install -c conda-forge opencv=4.1.0\\
 
-3. Before starting the chatbot, you will have to build models for dialogue_system and poem_generator. Follow the ReadMe.md file of models/dialogue_system and models/poem_generator to train and generate the models.\
+3. Before starting the chatbot, you will have to build models for dialogue_system and poem_generator. Follow the ReadMe.md file of models/dialogue_system and models/poem_generator to train and generate the models.
 
 3. Execute the below command to start the chatbot:\
 $ conda activate chatbot\
 $ python3 odo.py\
 
-Setup for Nividia Jetson Nano:\
+Setup for Nividia Jetson Nano:
 
 1. In the terminal, execute the following commands:\
 $ sudo fallocate -l 8G /swapfile\
@@ -50,10 +50,10 @@ $ sudo pip3 install tensorflow_gpu-1.15.0+nv19.11-cp36-cp36m-linux_aarch64.whl\
 $ sudo pip3 install pandas\
 $ sudo pip3 install --upgrade Cython\
 $ sudo pip3 install scikit-learn\
-$ sudo pip3 install tensorflow-hub\
+$ sudo pip3 install tensorflow-hub
 
 2. If you have done a ssh to Jetson Nano and no terminal is attached to it, then please execute the below command:\
-$ export DISPLAY=:0\
+$ export DISPLAY=:0
 
 3. Execute the below command to start the chatbot:\
 $ python3 odo.py
