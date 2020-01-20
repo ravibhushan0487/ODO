@@ -2,7 +2,7 @@ from keras.preprocessing.image import img_to_array
 import cv2
 from keras.models import load_model
 from keras.utils.data_utils import get_file
-from models.wide_resnet import WideResNet
+from models.face_recognition import WideResNet
 import numpy as np
 from pathlib import Path
 #import dlib
@@ -10,9 +10,9 @@ from pathlib import Path
 class Face_Recognizer:
     def __init__(self,show_camera_feed):
         # parameters for loading data and images
-        detection_model_path = 'models/trained_models/face_recognition/haarcascade_frontalface_default.xml'
-        emotion_model_path = 'models/trained_models/face_recognition/_mini_XCEPTION.48-0.62.hdf5'
-        gender_age_model_path = 'models/trained_models/face_recognition/weights.28-3.73.hdf5'
+        detection_model_path = 'models/face_recognition/trained_models/haarcascade_frontalface_default.xml'
+        emotion_model_path = 'models/face_recognition/trained_models/_mini_XCEPTION.48-0.62.hdf5'
+        #gender_age_model_path = 'models/trained_models/face_recognition/weights.28-3.73.hdf5'
         self.modhash = 'fbe63257a054c1c5466cfd7bf14646d6'
         print('creating face rcognizer')
         # hyper-parameters for bounding boxes shape
@@ -65,6 +65,7 @@ class Face_Recognizer:
             self.emotion_probability = np.max(self.preds)
             self.current_emotion = self.emotions[self.preds.argmax()]
 
+    #Currently not in use
     def detect_gender_age(self, frame):
         detector = dlib.get_frontal_face_detector()
         detected = detector(frame, 1)
