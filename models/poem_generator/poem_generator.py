@@ -171,7 +171,7 @@ class Generator:
 class Haiku_Bot:
     def __init__(self, tf_session):
         # Load a copy of the training model from disk by creating a new model using the same parameters and then loading the weights.
-        output_dir = Path('models/trained_models/poem_generator')
+        output_dir = Path('models/poem_generator')
         #output_dir = Path('/content')
 
         # Get the parameters used for creating the model
@@ -181,6 +181,6 @@ class Haiku_Bot:
         training_model, lstm, lines, inputs, outputs = create_training_model(latent_dim, n_tokens)
 
         # Load the specified weights
-        training_model.load_weights(output_dir / '2048-20-0.73-1.43.hdf5')
+        training_model.load_weights(output_dir / 'poem_generator_weights.hdf5')
 
         self.poet = Generator(lstm, lines, tf_session, tokenizer, n_tokens, max_line_length)
