@@ -19,7 +19,7 @@ $ conda install -c conda-forge keras\
 $ conda install -c anaconda pandas\
 $ conda install -c anaconda scikit-learn\
 $ conda install -c conda-forge tensorflow-hub\
-$ conda install -c conda-forge opencv=4.1.0\
+$ conda install -c conda-forge opencv=4.1.0
 
 3. Before starting the chatbot, you will have to build models for dialogue_system and poem_generator. Follow the ReadMe.md file of models/dialogue_system and models/poem_generator to train and generate the models.
 
