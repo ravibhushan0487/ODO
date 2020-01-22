@@ -36,9 +36,9 @@ import tensorflow as tf
 from tensorflow import keras
 from keras import backend as K
 
-from models.dialogue_system import Chatbot, UnivEncoder
-from models.poem_generator import Haiku_Bot, Generator, create_training_model
-from models.face_recognition import Face_Recognizer
+from models.dialogue_system.dialogue_system import Chatbot, UnivEncoder
+from models.poem_generator.poem_generator import Haiku_Bot, Generator, create_training_model
+from models.face_recognition.face_recognition import Face_Recognizer
 import cv2
 import warnings
 import numpy as np
@@ -406,7 +406,7 @@ def main():
     univEncoder = UnivEncoder(tf_session, chatbot.intents)
 
 
-    output_dir = Path('models/poem_generator')
+    output_dir = Path('models/poem_generator/trained_models')
     # Get the parameters used for creating the model
     latent_dim, n_tokens, max_line_length, tokenizer = joblib.load(output_dir / 'metadata.pkl')
     # Create the new placeholder model

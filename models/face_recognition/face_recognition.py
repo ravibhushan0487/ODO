@@ -2,13 +2,14 @@ from keras.preprocessing.image import img_to_array
 import cv2
 from keras.models import load_model
 from keras.utils.data_utils import get_file
-from models.face_recognition import WideResNet
+from models.face_recognition.wide_resnet import WideResNet
 import numpy as np
 from pathlib import Path
 #import dlib
 
 class Face_Recognizer:
     def __init__(self,show_camera_feed):
+        self.camera_ids = [0];
         # parameters for loading data and images
         detection_model_path = 'models/face_recognition/trained_models/haarcascade_frontalface_default.xml'
         emotion_model_path = 'models/face_recognition/trained_models/_mini_XCEPTION.48-0.62.hdf5'
@@ -19,6 +20,7 @@ class Face_Recognizer:
         # loading models
         self.face_detection = cv2.CascadeClassifier(detection_model_path)
         self.emotion_classifier = load_model(emotion_model_path, compile=False)
+        self.camera = [None]*len(self.camera_ids);
 
         #weight_file = get_file("weights.28-3.73.hdf5", gender_age_model_path, cache_subdir="pretrained_models",
         #                       file_hash=self.modhash, cache_dir=str(Path(__file__).resolve().parent))
@@ -32,8 +34,9 @@ class Face_Recognizer:
         self.emotions = ["angry" ,"disgust","scared", "happy", "sad", "surprised", "neutral"]
         # 0 for laptop camera. 1 for usb camera.
         #self.camera = cv2.VideoCapture(0)
-        self.camera = cv2.VideoCapture(0)
-        self.camera1 = cv2.VideoCapture(1)
+        for i in self.camera_ids:
+            self.camera[i] = cv2.VideoCapture(i)
+
         self.total_faces = 0
         self.preds = None
         self.gender = None
@@ -115,34 +118,24 @@ class Face_Recognizer:
         cv2.imshow("Probabilities", canvas)
 
     def start_detection(self):
-        frame = self.camera.read()[1]
-        frame1=frame
-        #reading the frame
-        #frame = imutils.resize(frame,width=400)
-        height , width , layers =  frame.shape
-        frame = cv2.resize(frame, (800, height)) 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = self.face_detection.detectMultiScale(gray,scaleFactor=1.1,minNeighbors=5,minSize=(30,30),flags=cv2.CASCADE_SCALE_IMAGE)
-        self.total_faces = len(faces)
-        self.detect_emotion(faces, gray)
-        #self.detect_gender_age(frame1)
-        if self.show_camera_feed:
-            self.display_camera(frame, faces)
-        #print('emotion::',self.current_emotion)
-
-        frame2 = self.camera1.read()[1]
-        frame3 = frame
-        height , width , layers =  frame.shape
-        frame2 = cv2.resize(frame2, (800, height)) 
-        gray = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
-        faces = self.face_detection.detectMultiScale(gray,scaleFactor=1.1,minNeighbors=5,minSize=(30,30),flags=cv2.CASCADE_SCALE_IMAGE)
-        self.total_faces = len(faces)
-        self.detect_emotion(faces, gray)
-        #self.detect_gender_age(frame1)
-        if self.show_camera_feed:
-            self.display_camera(frame2, faces)
+        for i in self.camera_ids:
+            frame = self.camera[i].read()[1]
+            frame1=frame
+            #reading the frame
+            #frame = imutils.resize(frame,width=400)
+            height , width , layers =  frame.shape
+            frame = cv2.resize(frame, (800, height)) 
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = self.face_detection.detectMultiScale(gray,scaleFactor=1.1,minNeighbors=5,minSize=(30,30),flags=cv2.CASCADE_SCALE_IMAGE)
+            self.total_faces = len(faces)
+            self.detect_emotion(faces, gray)
+            #self.detect_gender_age(frame1)
+            if self.show_camera_feed:
+                self.display_camera(frame, faces)
+            #print('emotion::',self.current_emotion)
 
     def stop_detection(self):
         self.show_camera_feed = False
-        self.camera.release()
+        for i in self.camera_ids:
+            self.camera[i].release()
         cv2.destroyAllWindows()
