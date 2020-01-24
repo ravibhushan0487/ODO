@@ -1,6 +1,7 @@
 ODO - The AI chatbot
 
 This is a completely offline chatbot suitable for theatres.\
+It is still in development, so you might see few changes related to Dialogue System and some files moving around.
 The chatbot has been modelled to represent the character of Little Prince from the book "The Little Prince". You can change the character of the chatbot by modifying file models/dialogue_system/dialogue_system.py. For more information on the project, please refer the [publication](https://github.com/ravibhushan0487/ODO/blob/master/The%20ODO%20Project.pdf)
 
 This chatbot is suitable for Linux environment. It is compatible to Nvidia Jetson Nano. For setup information please read on.
