@@ -104,13 +104,13 @@ def chatbot_process(emotion_queue, total_faces, stop_detecting, chatbot, fileno,
             print('Waiting for a user to join')
 
         while faces_count > 0:
-            if total_faces.empty() == False:
-                face_count = total_faces.get()
+            #if total_faces.empty() == False:
+                #faces_count = total_faces.get()
             if ask_user_name:
                 ask_user_name = False
-                index = np.random.randint(0,2)
-                salutations = ["\nMay I know your good name please\n>>", "\nWhat is your good name?\n>>", "\nCan I have your good name, please?\n>>"]
-                user_name = input(salutations[index])
+                #index = np.random.randint(0,2)
+                salutations = str("\nHello\nMy name is Odo.\n What is your name?\n>>");
+                user_name = input(salutations)
                 dir_name = ''.join(e for e in user_name if e.isalnum())
                 dir_name = dir_name.capitalize()
                 try:
@@ -120,31 +120,21 @@ def chatbot_process(emotion_queue, total_faces, stop_detecting, chatbot, fileno,
                 
                 img = np.zeros((64, 64, 3), dtype = "uint8") 
                 cv2.imwrite(str("users/"+user_name + "/profile_pic.jpg"), img)
-                if returning_user:
-                    printbot(str('hey '+user_name +' good to see you back'))
-                else:
-                    printbot(str('hi '+user_name))
+                #if returning_user:
+                printbot(str('Hi '+user_name +'.\nWhere do you come from?\n'))
+                #else:
+                #    printbot(str('hi '+user_name))
+                user_location = input(">>")
                 printbot('I am Chris Ziegler. Welcome to my world.')
                 emotion = emotion_queue.get()
-                if emotion['emotion'] == 'angry':
-                    printbot('You seem a bit upset. I think meeting my mysterious friend will cheer you up.')
-                elif emotion['emotion'] == 'disgust':
-                    printbot('You seem a bit upset. I think meeting my mysterious friend will cheer you up.')
-                elif emotion['emotion'] == 'scared':
-                    printbot('Do not be scared my friend. I have someone who will cheer you up. Get ready to meet my mysterious friend.')
-                elif emotion['emotion'] == 'happy':
-                    printbot('It seems to be a great day today. I have surprise for you. Meet my mysterious friend.')
-                elif emotion['emotion'] == 'sad':
-                    printbot('Do not be sad. Life is hard, but you can fight it. I think meeting my mysterious friend will cheer you up.')
-                elif emotion['emotion'] == 'surprised':
-                    printbot('I looks like you have got a lot of surprises today. I have asweet surprise for you. Meet my mysterious friend.')
-                else:
-                    printbot('It seems like everything is fine and boring with you. \nWhat we are about to do next is not boring. Meet my mysterious friend. ')
-                
-                printbot('Just be careful to not talk like a grown up with him!!')
-                time.sleep(3)
-                printbot('Ohh, he is here. Type hi and he will respond.')
-                #printbot(str('Your age and gender '+ emotion['age_gender']))
+                printbot(str('Nice to meet you'+user_name))
+                printbot('I am from very far away.')
+                printbot('I live here.')
+                printbot('Here on stage.')
+                printbot('I cannot leave the stage.')
+                printbot('This is my body.')
+                printbot('Do you see me?')
+                #TODO:pass signal to Max to lift lights up and down.
 
             try:
                 user_input = input('>>')

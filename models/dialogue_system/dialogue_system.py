@@ -218,16 +218,24 @@ class Chatbot:
         return self.stories[name]
 
     #Will shift these stories to csv file once time permits
-    def add_story_rose(self):
-        name = 'rose'
+    def add_story_see_me(self):
+        name = 'see_me'
         story = Story(name,{})
-        story.create_starting_intent('rose_hi',1,
-            ["hi", "hey", "yo","wow",'oh', 'how are you', 'who are you', 'what is your name','are you a robot', 'are you AI', 'are you the actor','are you a chatbot'],
-            ['Hello, I am the little prince. Did you see my rose?','I am little prince. Have you seen my rose?', 'Hi, Chris calls me the little prince. Do you like rose?']
+        story.create_starting_intent('player_sees_odo',1,
+            ['yes'],
+            ['Can you do the same?']
             )
-        story.create_script_intent('rose_abstract_1', 4,
-            ["i did not get you","what kind of absurd question is that","you are little prince","are you from the book little prince","who is little prince","whose little prince are you","what kind of name is that"],
-            ["My name is little Prince. I have come from a different planet. Now, have you seen a rose?", "little Prince is my name. I live at a planet far away. Please tell me if you have seen a rose?"]
+        story.create_script_intent('player_cannot_see_odo', 1,
+            ['no','where','what','?','how'],
+            ['Do you see something meoving?']
+            )
+        story.create_script_intent('player_sees_moving', 4,
+            ['yes'],
+            ['This is me.\n I am not like you.\n This stage is my body.\n Can you do the same?']
+            )
+        story.create_script_intent('player_cannot_sees_moving', 4,
+            ['no','where','what','?','how'],
+            ['This is me. I am not like you. This stage is my body.Have you seen a rose?']
             )
         story.create_script_intent('rose_abstract_2', 8,
             ["how is your planet","which planet","you come from a different planet","there is no life on other planets","no one lives on other planet","are you crazy","i do not beleive you","whose little prince are you","what kind of name is that"],
@@ -341,12 +349,12 @@ class Chatbot:
         print('')
 
     def create_character(self):
-        self.add_story_rose()
+        self.add_story_see_me()
         self.add_story_king()
         self.add_story_businessman()
         self.add_story_lighter()
         self.add_story_my_planet()
-        self.current_story = self.stories['rose']
+        self.current_story = self.stories['see_me']
         self.intents = {}
         self.intents = self.current_story.intents
 
