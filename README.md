@@ -61,3 +61,9 @@ $ python3 odo.py
 
 What to expect:\
 If you are using a laptop, then your webcam will start and it will try to detect a face. Only after face is detected will the chatbot start. If you are using Jetson, then this will activate the USB camera connected to jetson and wait till it detects the face.
+
+Work In Progress:\
+1. We are reconfiguring the character of chatbot by adding/removing new stories.
+2. Integrating two or more cameras to capture user emotions.
+2. This chatbot will get divided into three Jetson Nanos. First jetson will have the chatbot dialogue system and the poem generator. Second and third chatbot will have two USB cameras attached to them and will only do emotion detection. These two emotion detecting jetsons will communicate over lan via UDP protocol with the chatbot jetson.
+
