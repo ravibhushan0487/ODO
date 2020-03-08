@@ -5,12 +5,11 @@ from keras.utils.data_utils import get_file
 from models.face_recognition.wide_resnet import WideResNet
 import numpy as np
 from pathlib import Path
-import sys
 #import dlib
 
 class Face_Recognizer:
     def __init__(self,show_camera_feed):
-        self.camera_ids = [0,1,2,3,4,5,6,7,8,9,10]#USB Camera Ids. When you connect and disconnect, the USB camera ids change.
+        self.camera_ids = [0,1,2,3,4,5]
         # parameters for loading data and images
         detection_model_path = 'models/face_recognition/trained_models/haarcascade_frontalface_default.xml'
         emotion_model_path = 'models/face_recognition/trained_models/_mini_XCEPTION.48-0.62.hdf5'
@@ -21,8 +20,7 @@ class Face_Recognizer:
         # loading models
         self.face_detection = cv2.CascadeClassifier(detection_model_path)
         self.emotion_classifier = load_model(emotion_model_path, compile=False)
-        self.camera = [None]*(len(self.camera_ids)+1) # Adding one for MIPI Cmaera
-        self.once = 0
+        self.camera = [None]*(len(self.camera_ids)+1);#Adding 1 for MIPI camera
 
         #weight_file = get_file("weights.28-3.73.hdf5", gender_age_model_path, cache_subdir="pretrained_models",
         #                       file_hash=self.modhash, cache_dir=str(Path(__file__).resolve().parent))
@@ -38,21 +36,21 @@ class Face_Recognizer:
         #self.camera = cv2.VideoCapture(0)
         self.total_cameras = 0
         self.mipi_camera = False
-        self.camera_id = -1
 
         #Check for MIPI camera
         print("Trying to detect MIPI camera")
         try:
-            self.camera[len(self.camera_ids)] = cv2.VideoCapture(self.gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
-            if self.camera[len(self.camera_ids)].isOpened():
+            self.camera[len(self.camera_ids)] = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
+            if self.camera[len(self.camera_ids)] is None:
+                print("MIPI camera not found")
+            elif self.camera[len(self.camera_ids)].isOpened():
                 self.mipi_camera = True
                 self.camera_id = len(self.camera_ids)
-                print("MIPI camera detected")
+                print("MIPI Camera detected with id:"+str(self.camera_id))
+            else:
+                print("MIPI camera not found")
         except:
             print("MIPI camera not found")
-            print('Error: {}. {}, line: {}'.format(sys.exc_info()[0],
-                                         sys.exc_info()[1],
-                                         sys.exc_info()[2].tb_lineno))
 
         if self.mipi_camera is False:
             for i in self.camera_ids:
@@ -63,13 +61,9 @@ class Face_Recognizer:
                         self.camera_id = i
                         print("USB Camera detected with id:"+str(self.camera_id))
                         self.total_cameras += 1
-                        break # Remove this line if oyou want to make this code compatible with multiple USB cameras
+                        break
                 except cv2.error as e:
                     print("Error in camera "+str(i))
-                except:
-                    print('Error: {}. {}, line: {}'.format(sys.exc_info()[0],
-                                         sys.exc_info()[1],
-                                         sys.exc_info()[2].tb_lineno))
 
         self.total_faces = 0
         self.preds = None
@@ -80,17 +74,17 @@ class Face_Recognizer:
         self.current_emotion = None
         self.show_camera_feed = show_camera_feed
         if self.show_camera_feed:
-            cv2.namedWindow('My_Planet',cv2.WINDOW_NORMAL)
-            cv2.resizeWindow('My_Planet', 800,460)
-        print('created face recognizer')
+            # starting video streaming
+            cv2.namedWindow('your_face')
+        if self.total_cameras > 0:
+            print('created face recognizer')
 
     #For MIPI camera
     def gstreamer_pipeline(
-        self,
-        capture_width=3820,
-        capture_height=2464,
-        display_width=1024,
-        display_height=600,
+        capture_width=1280,
+        capture_height=720,
+        display_width=1280,
+        display_height=720,
         framerate=60,
         flip_method=0,
     ):
@@ -163,94 +157,34 @@ class Face_Recognizer:
         if len(faces) > 0:
             faces = sorted(faces, reverse=True, key=lambda x: (x[2] - x[0]) * (x[3] - x[1]))[0]
             (fX, fY, fW, fH) = faces
-            for (i, (emotion, prob)) in enumerate(zip(self.emotions, self.preds)):
-                # construct the current emotion text
-                text = "{}: {:.2f}%".format(emotion, prob * 100)
-                w = int(prob * 300)
-                cv2.putText(frame, self.current_emotion, (fX, fY - 10),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
-                cv2.rectangle(frame, (fX, fY), (fX + fW, fY + fH),(0, 0, 255), 2)
         else:
             fX, fY, fW, fH = 0,0,0,0
-        
-        cv2.imshow('My_Planet', frame)
+        for (i, (emotion, prob)) in enumerate(zip(self.emotions, self.preds)):
+            # construct the current emotion text
+            text = "{}: {:.2f}%".format(emotion, prob * 100)
+            w = int(prob * 300)
+            cv2.putText(frame, self.current_emotion, (fX, fY - 10),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+            cv2.rectangle(frame, (fX, fY), (fX + fW, fY + fH),(0, 0, 255), 2)
+        cv2.imshow('your_face', frame)
 
     def start_detection(self):
         #for i in self.camera_ids:
-        ret, frame = self.camera[self.camera_id].read()
-        frame1=frame.copy
+        frame = self.camera[self.camera_id].read()[1]
         #reading the frame
-        #frame = imutils.resize(frame,width=400)
         height , width , layers =  frame.shape
-        #print(height)
-        #print(width)
         frame = cv2.resize(frame, (800, height)) 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
         faces = self.face_detection.detectMultiScale(gray,scaleFactor=1.1,minNeighbors=5,minSize=(30,30),flags=cv2.CASCADE_SCALE_IMAGE)
         self.total_faces = len(faces)
         self.detect_emotion(faces, gray)
+        print(self.current_emotion)
         #self.detect_gender_age(frame1)
         if self.show_camera_feed:
+            cv2.imshow('your_face', frame)
             self.display_camera(frame, faces)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            n=1
 
     def stop_detection(self):
         self.show_camera_feed = False
         self.camera[self.camera_id].release()
         cv2.destroyAllWindows()
-
-        #Incase of disconnection
-    def reinitialize_camera(self, show_camera):
-        self.show_camera_feed = show_camera
-        self.camera[self.camera_id].release()
-        cv2.destroyAllWindows()
-
-        self.camera_id = -1
-        self.total_cameras = 0
-        self.mipi_camera = False
-
-        #Check for MIPI camera
-        print("Trying to detect MIPI camera")
-        try:
-            self.camera[len(self.camera_ids)] = cv2.VideoCapture(self.gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
-            if self.camera[len(self.camera_ids)].isOpened():
-                self.mipi_camera = True
-                self.camera_id = len(self.camera_ids)
-                print("MIPI camera detected")
-        except:
-            print("MIPI camera not found")
-            print('Error: {}. {}, line: {}'.format(sys.exc_info()[0],
-                                         sys.exc_info()[1],
-                                         sys.exc_info()[2].tb_lineno))
-
-        if self.mipi_camera is False:
-            for i in self.camera_ids:
-                print("Trying to detect USB camera")
-                try:
-                    self.camera[i] = cv2.VideoCapture(i)
-                    if(self.camera[i].isOpened()):
-                        self.camera_id = i
-                        print("USB Camera detected with id:"+str(self.camera_id))
-                        self.total_cameras += 1
-                        break # Remove this line if oyou want to make this code compatible with multiple USB cameras
-                except cv2.error as e:
-                    print("Error in camera "+str(i))
-                except:
-                    print('Error: {}. {}, line: {}'.format(sys.exc_info()[0],
-                                         sys.exc_info()[1],
-                                         sys.exc_info()[2].tb_lineno))
-
-        self.total_faces = 0
-        self.preds = None
-        self.gender = None
-        self.age = None
-        self.age_gender = None
-        self.emotion_probability = None
-        self.current_emotion = None
-        if self.show_camera_feed:
-            cv2.namedWindow('My_Planet',cv2.WND_PROP_FULLSCREEN)
-            cv2.setWindowProperty('My Planet',cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
-            #cv2.resizeWindow('My_Planet', 1024,600)
-
